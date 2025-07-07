@@ -113,7 +113,7 @@ def Preprocessing_Data(rawData):
 
 
         while POSN < len(one_PDF_data):
-            
+            print(POSN)
             if len(one_PDF_data[POSN]) > 1:
                 #不是最后一页，表格不封闭情况下找PO号
                 if one_PDF_data[POSN][0][:3] == '000':
