@@ -161,7 +161,7 @@ def Preprocessing_Data(rawData):
                             Service_No += ['']   #找PO号
                     
                             #找描述
-                            pod = one_PDF_data[POSN][1]   
+                            pod = one_PDF_data[POSN + f][1]   
                             a = 1
                            
                             while one_PDF_data[POSN + a][1] != '' and one_PDF_data[POSN + a][1] != 'Non-SST Registered Supplier Purchases 0%' and one_PDF_data[POSN + a + 1][0] != '':
