@@ -116,30 +116,27 @@ def Preprocessing_Data(rawData):
             print(POSN)
             if len(one_PDF_data[POSN]) > 1:
                 #不是最后一页，表格不封闭情况下找PO号
-                if one_PDF_data[POSN][0][:3] == '000':
+                if one_PDF_data[POSN][0] != None and one_PDF_data[POSN][0][:3] == '000' :
                     Service_No += [one_PDF_data[POSN][0]]   #找PO号
                     
                     #找描述
                     pod = one_PDF_data[POSN][1]   
                     a = 1
-                    
-                    """
                     while one_PDF_data[POSN + a][1] != '' and one_PDF_data[POSN + a][1] != 'Non-SST Registered Supplier Purchases 0%' and one_PDF_data[POSN + a + 1][0] != '':
-                        pod += one_PDF_data[POSN + a][1]
-                        print(pod)
+                        pod += ' ' + one_PDF_data[POSN + a][1]
                         a = a + 1
-                    """
-
+                    
+                    '''
                     while one_PDF_data[POSN + a + 1][0] != '':
                         if len(one_PDF_data[POSN + a]) > 1:
                             if one_PDF_data[POSN + a][1] != 'Non-SST Registered Supplier Purchases 0%':
                                 if one_PDF_data[POSN + a][1] != '':
                                     pod += one_PDF_data[POSN + a][1]
                         a = a + 1
-
+                    '''
 
                     Description += [pod]
-
+                
                     #找Delivery Date
                     Delivery_Date += [one_PDF_data[POSN][2]]
 
@@ -155,6 +152,46 @@ def Preprocessing_Data(rawData):
                     #找Total_Price
                     Total_Price += [one_PDF_data[POSN + 1][len(one_PDF_data[POSN + 1]) - 1]]
 
+                    #检测是否有无编号收费项目
+                    f = 1
+                    while len(one_PDF_data) > POSN + f and f != 0:
+                        
+                        if one_PDF_data[POSN + f][0] != None and one_PDF_data[POSN + f][0][:3] != '000' and len(one_PDF_data[POSN + f]) == 7 and len(one_PDF_data[POSN + f][6]) >= 3 and one_PDF_data[POSN + f][6][-3] == '.' and one_PDF_data[POSN + f][6] != one_PDF_data[POSN + f -1][5]:
+                        
+                            Service_No += ['']   #找PO号
+                    
+                            #找描述
+                            pod = one_PDF_data[POSN][1]   
+                            a = 1
+                           
+                            while one_PDF_data[POSN + a][1] != '' and one_PDF_data[POSN + a][1] != 'Non-SST Registered Supplier Purchases 0%' and one_PDF_data[POSN + a + 1][0] != '':
+                                pod += one_PDF_data[POSN + a][1]
+                            
+
+                                a = a + 1
+                            Description += [pod]
+                            #找Delivery Date
+                            Delivery_Date += ['']
+
+                            #找Order_Qty
+                            Order_Qty += ['']
+
+                            #找UoM
+                            UoM += ['']
+
+                            #找Unit_Price
+                            Unit_Price += ['']
+
+                            #找Total_Price
+                            Total_Price += [one_PDF_data[POSN + f][len(one_PDF_data[POSN + f]) - 1]]
+                        f = f + 1
+                        if one_PDF_data[POSN + f][1] != None and one_PDF_data[POSN + f][1] == 'Total Gross':
+                            f = 0
+                        if one_PDF_data[POSN + f][0] != None and one_PDF_data[POSN + f][0][:3] == '000':
+                            f = 0    
+
+
+                        
 
 
 
@@ -188,6 +225,7 @@ def Preprocessing_Data(rawData):
 
                         #找Total_Price
                         Total_Price += [one_PDF_data[POSN + 1][len(one_PDF_data[POSN + 1]) - 1]]
+
 
 
 
@@ -310,3 +348,4 @@ while a < len(all_data):
 print('输出文件: ', xlsxName)
 
 workbook.close()
+print(all_data)
