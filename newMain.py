@@ -87,9 +87,14 @@ def Preprocessing_Data(rawData):
         else:
             POSN = one_PDF_data.index(['Service No', '', 'Date', 'Qty', '', '', ''])
             PO_No = one_PDF_data[0][0][12:]          
+<<<<<<< HEAD
             PO_Date = one_PDF_data[1][0][10:]            
             pn = one_PDF_data[2][0].index(':') + 2
             Contract_No = one_PDF_data[2][0][pn:]
+=======
+            PO_Date = one_PDF_data[1][0][10:]
+            Contract_No = one_PDF_data[2][0][15:]
+>>>>>>> ee3810a6218068e15dbbd206c70492dd7ee7cad6
             Payment_Terms = one_PDF_data[3][0][16:]
             Project_Cost_Center = one_PDF_data[5][0][22:] + " "
             if one_PDF_data[6][0] == 'MALAYSIA':
