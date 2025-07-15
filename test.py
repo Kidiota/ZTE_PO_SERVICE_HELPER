@@ -51,7 +51,7 @@ def get_raw_info():
                                                             if row != ['', '', '']:
                                                                 if row != ['', '']:
                                                                     if row != ['']:
-                                                                        #print(row)
+                                                                        print(row)
                                                                         infoInLine = [row]
                                                                         oneRawInfo += infoInLine
         rawInfo += [oneRawInfo]
